@@ -1,326 +1,192 @@
 import { Navigation } from '../components/Navigation';
-import { AlertTriangle, Globe, Info, Mail, MapPin as MapPinIcon, Phone, Plane, Shield, Wallet } from 'lucide-react';
+import { Footer } from '../components/Footer';
+import { AlertTriangle, Globe, Info, Mail, MapPin as MapPinIcon, Phone, Plane, Shield, Wallet, Sparkles, Clock, Zap } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export function TravelInfo() {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 }
+  };
+
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white">
       <Navigation />
 
-      <div className="mx-auto max-w-6xl px-4 py-12">
-        <div className="mb-8">
-          <div className="mb-4 flex items-center gap-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600">
-              <Info className="h-6 w-6 text-white" />
+      <motion.div 
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="mx-auto max-w-7xl px-6 py-12"
+      >
+        <motion.div variants={itemVariants} className="mb-16">
+          <div className="flex items-center gap-5 mb-6">
+            <div className="w-16 h-16 bg-primary text-white rounded-2xl flex items-center justify-center shadow-lg shadow-green-600/20">
+              <Info className="w-8 h-8" />
             </div>
             <div>
-              <h1 className="text-4xl font-bold text-gray-900">Travel Information</h1>
-              <p className="text-gray-600">Essential info for your Rwanda trip</p>
+              <h1 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter uppercase leading-none">The Essentials</h1>
+              <p className="text-slate-500 font-medium italic mt-2">Comprehensive strategic data for your Rwandan expedition.</p>
             </div>
           </div>
-        </div>
+        </motion.div>
 
-        <div className="mb-8 rounded-xl border border-blue-200 bg-gradient-to-br from-blue-50 to-indigo-50 p-8">
-          <h2 className="mb-6 text-2xl font-bold text-gray-900">Quick Facts</h2>
-          <div className="grid gap-6 md:grid-cols-3">
-            <div>
-              <p className="mb-1 text-sm text-gray-600">Capital</p>
-              <p className="font-semibold text-gray-900">Kigali</p>
-            </div>
-            <div>
-              <p className="mb-1 text-sm text-gray-600">Language</p>
-              <p className="font-semibold text-gray-900">Kinyarwanda, French, English</p>
-            </div>
-            <div>
-              <p className="mb-1 text-sm text-gray-600">Currency</p>
-              <p className="font-semibold text-gray-900">Rwandan Franc (RWF)</p>
-            </div>
-            <div>
-              <p className="mb-1 text-sm text-gray-600">Time Zone</p>
-              <p className="font-semibold text-gray-900">CAT (UTC+2)</p>
-            </div>
-            <div>
-              <p className="mb-1 text-sm text-gray-600">Electricity</p>
-              <p className="font-semibold text-gray-900">230V, 50Hz (Type C, J plugs)</p>
-            </div>
-            <div>
-              <p className="mb-1 text-sm text-gray-600">Calling Code</p>
-              <p className="font-semibold text-gray-900">+250</p>
-            </div>
+        <motion.div variants={itemVariants} className="mb-16 glass rounded-[3rem] p-12 border-primary/10 bg-slate-50/50 shadow-2xl relative overflow-hidden">
+          <div className="absolute top-0 right-0 p-12 opacity-5 pointer-events-none">
+            <Zap className="w-48 h-48 text-primary" />
           </div>
-        </div>
+          <h2 className="text-3xl font-black text-slate-900 uppercase tracking-tighter mb-10">Strategic Matrix</h2>
+          <div className="grid gap-10 md:grid-cols-3">
+            {[
+              { label: 'Administrative Hub', value: 'Kigali', icon: MapPinIcon },
+              { label: 'Official Dialect', value: 'Kinyarwanda, English, French', icon: Globe },
+              { label: 'Economic Token', value: 'Rwandan Franc (RWF)', icon: Wallet },
+              { label: 'Temporal Node', value: 'CAT (UTC+2)', icon: Clock },
+              { label: 'Power Grid', value: '230V, 50Hz (Type C, J)', icon: Zap },
+              { label: 'Access Code', value: '+250', icon: Phone },
+            ].map((fact, i) => (
+              <div key={i} className="group">
+                <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-2">{fact.label}</p>
+                <div className="flex items-center gap-3">
+                  <fact.icon className="w-5 h-5 text-primary opacity-40 group-hover:opacity-100 transition-opacity" />
+                  <p className="text-xl font-black text-slate-900 tracking-tighter uppercase">{fact.value}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </motion.div>
 
-        <div className="mb-8 grid gap-6 md:grid-cols-2">
-          <div className="rounded-xl border border-gray-200 bg-white p-6">
-            <div className="mb-4 flex items-center gap-2">
-              <Plane className="h-6 w-6 text-blue-600" />
-              <h2 className="text-xl font-bold text-gray-900">Visa & Entry</h2>
+        <div className="mb-16 grid gap-10 md:grid-cols-2">
+          <motion.div variants={itemVariants} className="card-lift glass rounded-[3rem] p-10 border-border group">
+            <div className="mb-8 flex items-center gap-4">
+              <div className="p-4 bg-blue-50 text-blue-600 rounded-2xl group-hover:bg-blue-600 group-hover:text-white transition-all">
+                <Plane className="w-7 h-7" />
+              </div>
+              <h2 className="text-2xl font-black text-slate-900 uppercase tracking-tighter">Border Protocol</h2>
             </div>
-            <ul className="space-y-3 text-gray-700">
-              <li className="flex items-start gap-2">
-                <span className="mt-1 text-blue-600">&bull;</span>
-                <div>
-                  <strong>Visa on arrival:</strong> Available for most nationalities ($50 for 30 days)
-                </div>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="mt-1 text-blue-600">&bull;</span>
-                <div>
-                  <strong>E-visa:</strong> Apply online before travel at www.migration.gov.rw
-                </div>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="mt-1 text-blue-600">&bull;</span>
-                <div>
-                  <strong>Passport validity:</strong> Must be valid for 6 months beyond entry
-                </div>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="mt-1 text-blue-600">&bull;</span>
-                <div>
-                  <strong>East Africa Tourist Visa:</strong> $100 for Rwanda, Kenya, Uganda (90 days)
-                </div>
-              </li>
-            </ul>
-          </div>
-
-          <div className="rounded-xl border border-gray-200 bg-white p-6">
-            <div className="mb-4 flex items-center gap-2">
-              <Shield className="h-6 w-6 text-blue-600" />
-              <h2 className="text-xl font-bold text-gray-900">Health & Safety</h2>
-            </div>
-            <ul className="space-y-3 text-gray-700">
-              <li className="flex items-start gap-2">
-                <span className="mt-1 text-blue-600">&bull;</span>
-                <div>
-                  <strong>Vaccinations:</strong> Yellow fever required (if coming from endemic area)
-                </div>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="mt-1 text-blue-600">&bull;</span>
-                <div>
-                  <strong>Recommended:</strong> Hepatitis A & B, typhoid, tetanus
-                </div>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="mt-1 text-blue-600">&bull;</span>
-                <div>
-                  <strong>Malaria:</strong> Low risk in Kigali, prophylaxis recommended for rural areas
-                </div>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="mt-1 text-blue-600">&bull;</span>
-                <div>
-                  <strong>Safety:</strong> Rwanda is one of Africa&apos;s safest countries
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="mb-8 rounded-xl border border-gray-200 bg-white p-8">
-          <div className="mb-6 flex items-center gap-2">
-            <Wallet className="h-6 w-6 text-blue-600" />
-            <h2 className="text-2xl font-bold text-gray-900">Money & Banking</h2>
-          </div>
-          <div className="grid gap-6 md:grid-cols-3">
-            <div>
-              <h3 className="mb-2 font-semibold text-gray-900">Currency Exchange</h3>
-              <p className="mb-2 text-sm text-gray-700">1 USD approximately 1,300 RWF (rates vary)</p>
-              <ul className="space-y-1 text-sm text-gray-600">
-                <li>&bull; Banks and forex bureaus available</li>
-                <li>&bull; Hotels offer exchange (lower rates)</li>
-                <li>&bull; USD widely accepted in tourism</li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="mb-2 font-semibold text-gray-900">ATMs & Cards</h3>
-              <ul className="space-y-1 text-sm text-gray-600">
-                <li>&bull; ATMs common in Kigali</li>
-                <li>&bull; Visa/Mastercard widely accepted</li>
-                <li>&bull; Notify bank before travel</li>
-                <li>&bull; Mobile money (MTN, Airtel) popular</li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="mb-2 font-semibold text-gray-900">Tipping Guide</h3>
-              <ul className="space-y-1 text-sm text-gray-600">
-                <li>&bull; Restaurants: 10% (if not included)</li>
-                <li>&bull; Guides: $10-20 per day</li>
-                <li>&bull; Hotel staff: $2-5</li>
-                <li>&bull; Taxis: Round up fare</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div className="mb-8 rounded-xl border border-gray-200 bg-white p-8">
-          <div className="mb-6 flex items-center gap-2">
-            <Phone className="h-6 w-6 text-blue-600" />
-            <h2 className="text-2xl font-bold text-gray-900">Communication & Internet</h2>
-          </div>
-          <div className="grid gap-6 md:grid-cols-2">
-            <div>
-              <h3 className="mb-3 font-semibold text-gray-900">Mobile Networks</h3>
-              <p className="mb-3 text-sm text-gray-700">
-                Get a local SIM card at the airport or in town. Major providers:
-              </p>
-              <ul className="space-y-2 text-sm">
-                <li className="flex items-start gap-2">
-                  <span className="text-blue-600">&bull;</span>
+            <ul className="space-y-6 text-slate-600">
+              {[
+                { title: 'Universal Arrival Visa', desc: 'Available for all nationalities upon entry ($50 USD).' },
+                { title: 'Digital Authorization', desc: 'Secure your e-visa via migration.gov.rw.' },
+                { title: 'Identity Validity', desc: 'Passports must be active for 180+ days post-entry.' },
+                { title: 'Regional Pass', desc: 'East Africa Tourist Visa covers Rwanda, Kenya, Uganda.' },
+              ].map((item, i) => (
+                <li key={i} className="flex items-start gap-4">
+                  <div className="w-2 h-2 rounded-full bg-blue-600 mt-2 shrink-0" />
                   <div>
-                    <strong>MTN:</strong> Best coverage nationwide
+                    <strong className="block text-slate-900 font-black uppercase text-xs tracking-widest mb-1">{item.title}</strong>
+                    <p className="text-sm font-medium italic">{item.desc}</p>
                   </div>
                 </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-blue-600">&bull;</span>
+              ))}
+            </ul>
+          </motion.div>
+
+          <motion.div variants={itemVariants} className="card-lift glass rounded-[3rem] p-10 border-border group">
+            <div className="mb-8 flex items-center gap-4">
+              <div className="p-4 bg-emerald-50 text-emerald-600 rounded-2xl group-hover:bg-emerald-600 group-hover:text-white transition-all">
+                <Shield className="w-7 h-7" />
+              </div>
+              <h2 className="text-2xl font-black text-slate-900 uppercase tracking-tighter">Safety Integrity</h2>
+            </div>
+            <ul className="space-y-6 text-slate-600">
+              {[
+                { title: 'Health Certification', desc: 'Yellow Fever immunization required for specific entry.' },
+                { title: 'System Resilience', desc: 'Rwanda maintains peak security indices globally.' },
+                { title: 'Biosafety', desc: 'Malaria prophylaxis suggested for specialized park zones.' },
+                { title: 'Emergency Node', desc: 'Dial 112 for immediate tactical security response.' },
+              ].map((item, i) => (
+                <li key={i} className="flex items-start gap-4">
+                  <div className="w-2 h-2 rounded-full bg-emerald-600 mt-2 shrink-0" />
                   <div>
-                    <strong>Airtel:</strong> Good alternative with competitive rates
+                    <strong className="block text-slate-900 font-black uppercase text-xs tracking-widest mb-1">{item.title}</strong>
+                    <p className="text-sm font-medium italic">{item.desc}</p>
                   </div>
                 </li>
-                <li className="text-gray-600">Data: 1GB approximately $2-3, widely available</li>
-              </ul>
+              ))}
+            </ul>
+          </motion.div>
+        </div>
+
+        <motion.div variants={itemVariants} className="mb-16 rounded-[3rem] border border-slate-100 bg-slate-50 p-12">
+          <div className="mb-10 flex items-center gap-4">
+            <Wallet className="w-8 h-8 text-primary" />
+            <h2 className="text-3xl font-black text-slate-900 uppercase tracking-tighter leading-none">Capital Logistics</h2>
+          </div>
+          <div className="grid gap-10 md:grid-cols-3">
+            <div>
+              <h3 className="text-[10px] font-black text-primary uppercase tracking-[0.3em] mb-4">Currency Matrix</h3>
+              <p className="text-slate-600 font-medium italic leading-relaxed">Stable exchange nodes located at airports and urban bureaus. USD (2013+ series) widely utilized for premium services.</p>
             </div>
             <div>
-              <h3 className="mb-3 font-semibold text-gray-900">Internet Access</h3>
-              <ul className="space-y-2 text-sm text-gray-700">
-                <li className="flex items-start gap-2">
-                  <span className="text-blue-600">&bull;</span>
-                  <span>Good 4G coverage in Kigali and major towns</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-blue-600">&bull;</span>
-                  <span>Free Wi-Fi in most hotels, cafes, and restaurants</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-blue-600">&bull;</span>
-                  <span>Internet cafes available in cities</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-blue-600">&bull;</span>
-                  <span>Connection may be slower in rural or park areas</span>
-                </li>
-              </ul>
+              <h3 className="text-[10px] font-black text-primary uppercase tracking-[0.3em] mb-4">Digital Banking</h3>
+              <p className="text-slate-600 font-medium italic leading-relaxed">Visa/Mastercard integration is high in urban centers. Local mobile money protocols (MTN/Airtel) are the gold standard for micro-transactions.</p>
+            </div>
+            <div>
+              <h3 className="text-[10px] font-black text-primary uppercase tracking-[0.3em] mb-4">Gratuity Protocol</h3>
+              <p className="text-slate-600 font-medium italic leading-relaxed">10% standard for dining nodes. Strategic tipping for guides ($15+) and hospitality staff ($5) is appreciated for elite service.</p>
             </div>
           </div>
-        </div>
+        </motion.div>
 
-        <div className="mb-8 rounded-xl border-2 border-red-200 bg-gradient-to-br from-red-50 to-orange-50 p-6">
-          <div className="mb-4 flex items-center gap-2">
-            <AlertTriangle className="h-6 w-6 text-red-600" />
-            <h2 className="text-xl font-bold text-gray-900">Emergency Contacts</h2>
+        <motion.div variants={itemVariants} className="mb-16 rounded-[4rem] border-2 border-red-100 bg-red-50/50 p-10 relative overflow-hidden group">
+          <div className="absolute top-0 right-0 p-10 opacity-5 group-hover:scale-110 transition-transform duration-700">
+             <AlertTriangle className="w-40 h-40 text-red-600" />
           </div>
-          <div className="grid gap-4 md:grid-cols-3">
-            <div className="rounded-lg bg-white p-4">
-              <p className="mb-1 text-sm text-gray-600">Police</p>
-              <p className="text-2xl font-bold text-gray-900">112</p>
-            </div>
-            <div className="rounded-lg bg-white p-4">
-              <p className="mb-1 text-sm text-gray-600">Ambulance</p>
-              <p className="text-2xl font-bold text-gray-900">912</p>
-            </div>
-            <div className="rounded-lg bg-white p-4">
-              <p className="mb-1 text-sm text-gray-600">Fire Service</p>
-              <p className="text-2xl font-bold text-gray-900">111</p>
-            </div>
+          <div className="mb-10 flex items-center gap-4">
+            <AlertTriangle className="w-8 h-8 text-red-600" />
+            <h2 className="text-3xl font-black text-slate-900 uppercase tracking-tighter">Tactical Response</h2>
           </div>
-          <div className="mt-4 rounded-lg bg-white p-4">
-            <p className="mb-2 text-sm font-semibold text-gray-900">Tourist Police</p>
-            <p className="text-gray-700">Available 24/7 in major tourist areas and at the airport</p>
-          </div>
-        </div>
-
-        <div className="mb-8 rounded-xl border border-gray-200 bg-white p-8">
-          <h2 className="mb-6 text-2xl font-bold text-gray-900">Getting Around</h2>
           <div className="grid gap-6 md:grid-cols-3">
-            <div>
-              <h3 className="mb-2 font-semibold text-gray-900">In Kigali</h3>
-              <ul className="space-y-1 text-sm text-gray-700">
-                <li>&bull; Motorcycle taxis (most common)</li>
-                <li>&bull; Ride-hailing apps (Yego, Move)</li>
-                <li>&bull; Regular taxis (negotiate fare)</li>
-                <li>&bull; Public buses (cheap, crowded)</li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="mb-2 font-semibold text-gray-900">Between Cities</h3>
-              <ul className="space-y-1 text-sm text-gray-700">
-                <li>&bull; Buses (frequent, affordable)</li>
-                <li>&bull; Private car hire with driver</li>
-                <li>&bull; Shared taxis</li>
-                <li>&bull; Domestic flights (limited)</li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="mb-2 font-semibold text-gray-900">Tips</h3>
-              <ul className="space-y-1 text-sm text-gray-700">
-                <li>&bull; Roads are generally good</li>
-                <li>&bull; Motorcycle helmets mandatory</li>
-                <li>&bull; Agree on prices beforehand</li>
-                <li>&bull; Traffic drives on the right</li>
-              </ul>
-            </div>
+             {[
+               { label: 'Security Forces', code: '112' },
+               { label: 'Medical Response', code: '912' },
+               { label: 'Tactical Fire Unit', code: '111' },
+             ].map((node, i) => (
+               <div key={i} className="bg-white rounded-3xl p-8 border border-red-100 shadow-sm text-center">
+                 <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">{node.label}</p>
+                 <p className="text-5xl font-black text-red-600 tracking-tighter">{node.code}</p>
+               </div>
+             ))}
           </div>
-        </div>
+        </motion.div>
 
-        <div className="mb-8 rounded-xl border border-green-200 bg-gradient-to-br from-green-50 to-emerald-50 p-8">
-          <h2 className="mb-6 text-2xl font-bold text-gray-900">Contact SURA RWANDA</h2>
-          <div className="grid gap-6 md:grid-cols-3">
-            <div className="rounded-lg bg-white p-6">
-              <div className="mb-3 flex items-center gap-2 text-green-600">
-                <Mail className="h-6 w-6" />
-                <h3 className="font-semibold text-gray-900">Email</h3>
-              </div>
-              <p className="text-gray-700">info@surarwanda.com</p>
-              <p className="text-gray-700">support@surarwanda.com</p>
-            </div>
-            <div className="rounded-lg bg-white p-6">
-              <div className="mb-3 flex items-center gap-2 text-green-600">
-                <Phone className="h-6 w-6" />
-                <h3 className="font-semibold text-gray-900">Phone</h3>
-              </div>
-              <p className="text-gray-700">+250 788 123 456</p>
-              <p className="text-gray-700">+250 788 654 321</p>
-            </div>
-            <div className="rounded-lg bg-white p-6">
-              <div className="mb-3 flex items-center gap-2 text-green-600">
-                <MapPinIcon className="h-6 w-6" />
-                <h3 className="font-semibold text-gray-900">Address</h3>
-              </div>
-              <p className="text-sm text-gray-700">
-                KG 11 Ave, Kigali
-                <br />
-                Kigali City Tower, Floor 5
-                <br />
-                Kigali, Rwanda
-              </p>
-            </div>
-          </div>
-          <div className="mt-6 rounded-lg bg-white p-6">
-            <div className="mb-3 flex items-center gap-2 text-green-600">
-              <Globe className="h-6 w-6" />
-              <h3 className="font-semibold text-gray-900">Office Hours</h3>
-            </div>
-            <div className="grid gap-4 text-sm text-gray-700 md:grid-cols-2">
-              <div>
-                <p>
-                  <strong>Monday - Friday:</strong> 8:00 AM - 6:00 PM
-                </p>
-                <p>
-                  <strong>Saturday:</strong> 9:00 AM - 4:00 PM
-                </p>
+        <motion.div variants={itemVariants} className="mb-24 glass rounded-[3rem] p-12 border-primary/20 bg-primary/5">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-10">
+            <div className="flex items-center gap-6">
+              <div className="w-20 h-20 bg-primary text-white rounded-[2rem] flex items-center justify-center shadow-2xl">
+                <Mail className="w-10 h-10" />
               </div>
               <div>
-                <p>
-                  <strong>Sunday:</strong> Closed
-                </p>
-                <p>
-                  <strong>Public Holidays:</strong> Closed
-                </p>
+                <h2 className="text-3xl font-black text-slate-900 uppercase tracking-tighter leading-none">Support Hub</h2>
+                <p className="text-slate-500 font-medium italic mt-2 text-lg">Direct communication line to Sura Rwanda agents.</p>
               </div>
             </div>
+            <div className="flex flex-wrap gap-4">
+              <button className="btn-primary px-10 py-5 rounded-2xl flex items-center gap-3">
+                <span className="text-sm font-black uppercase tracking-widest">Open Session</span>
+                <Sparkles className="w-5 h-5" />
+              </button>
+              <button className="px-10 py-5 bg-white border border-slate-200 rounded-2xl font-black text-slate-900 uppercase tracking-widest text-sm hover:bg-slate-50 transition-all">
+                Documentation
+              </button>
+            </div>
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
+
+      <Footer />
     </div>
   );
 }
+

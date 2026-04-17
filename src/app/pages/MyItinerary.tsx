@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Navigation } from '../components/Navigation';
-import { Calendar, Plus, Trash2, MapPin, Clock, DollarSign, Download, Sparkles, Loader2 } from 'lucide-react';
+import { Footer } from '../components/Footer';
+import { Calendar, Plus, Trash2, MapPin, Clock, DollarSign, Download, Sparkles, Loader2, ShieldCheck, Globe } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface ItineraryItem {
@@ -94,20 +95,32 @@ export function MyItinerary() {
     return (
       <div className="min-h-screen bg-white flex flex-col">
         <Navigation />
-        <div className="flex-1 flex flex-col items-center justify-center space-y-4">
+        <div className="flex-1 flex flex-col items-center justify-center space-y-8">
           <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-            className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full"
-          />
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, repeat: Infinity, repeatType: "reverse" }}
-            className="text-primary font-bold tracking-widest uppercase text-sm"
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            className="relative"
           >
-            Retrieving Your Journey...
-          </motion.p>
+             <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+              className="w-24 h-24 border-b-4 border-primary rounded-full"
+            />
+            <div className="absolute inset-0 flex items-center justify-center">
+               <Globe className="w-8 h-8 text-primary animate-pulse" />
+            </div>
+          </motion.div>
+          <div className="text-center">
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, repeat: Infinity, repeatType: "reverse" }}
+              className="text-slate-900 font-black tracking-[0.3em] uppercase text-xs mb-2"
+            >
+              Retrieving Digital Journey
+            </motion.p>
+            <p className="text-slate-400 text-[10px] font-medium italic">Synchronizing with Kigali Central Nodes...</p>
+          </div>
         </div>
       </div>
     );
@@ -117,51 +130,51 @@ export function MyItinerary() {
     <div className="min-h-screen bg-white">
       <Navigation />
 
-      <div className="max-w-5xl mx-auto px-4 py-12">
+      <div className="max-w-5xl mx-auto px-6 py-12">
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           className="mb-12"
         >
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-            <div className="flex items-center gap-4">
-              <div className="w-14 h-14 bg-primary text-white rounded-2xl flex items-center justify-center shadow-lg shadow-green-600/20">
-                <Calendar className="w-7 h-7" />
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
+            <div className="flex items-center gap-5">
+              <div className="w-16 h-16 bg-primary text-white rounded-2xl flex items-center justify-center shadow-lg shadow-green-600/20">
+                <Calendar className="w-8 h-8" />
               </div>
               <div>
-                <h1 className="text-4xl md:text-5xl font-bold text-slate-900 tracking-tight">Your Adventure</h1>
-                <p className="text-slate-500 font-medium">Curated itinerary for the Land of a Thousand Hills</p>
+                <h1 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter uppercase leading-none">The Itinerary</h1>
+                <p className="text-slate-500 font-medium italic mt-2">Your bespoke expedition through the Land of a Thousand Hills.</p>
               </div>
             </div>
             <button
               onClick={() => setShowAddForm(!showAddForm)}
-              className="btn-primary flex items-center justify-center gap-2 group"
+              className="btn-primary flex items-center justify-center gap-3 group px-8 py-4 rounded-2xl"
             >
-              <Plus className="w-5 h-5 group-hover:rotate-90 transition-transform" />
-              <span>Add Experience</span>
+              <Plus className="w-6 h-6 group-hover:rotate-180 transition-transform duration-500" />
+              <span className="text-sm font-black uppercase tracking-widest">New Entry</span>
             </button>
           </div>
         </motion.div>
 
         {/* Summary Stats */}
         <motion.div 
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12"
+          className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16"
         >
           {[
-            { label: 'Total Days', value: Object.keys(groupedItems).length, icon: Calendar, color: 'text-primary' },
-            { label: 'Total Activities', value: items.length, icon: MapPin, color: 'text-primary' },
-            { label: 'Estimated Budget', value: `$${totalCost.toLocaleString()}`, icon: DollarSign, color: 'text-primary' },
+            { label: 'Total Duration', value: `${Object.keys(groupedItems).length} Days`, icon: Calendar, color: 'text-primary', bg: 'bg-primary/5' },
+            { label: 'Strategic Stops', value: `${items.length} Nodes`, icon: MapPin, color: 'text-blue-600', bg: 'bg-blue-50' },
+            { label: 'Projected Budget', value: `$${totalCost.toLocaleString()}`, icon: DollarSign, color: 'text-amber-600', bg: 'bg-amber-50' },
           ].map((stat, i) => (
-            <div key={i} className="glass rounded-2xl p-6 border-border shadow-sm flex items-center gap-4 transition-all hover:border-primary/30">
-              <div className={`p-3 rounded-xl bg-primary/10 ${stat.color}`}>
-                <stat.icon className="w-6 h-6" />
+            <div key={i} className="glass rounded-[2.5rem] p-8 border-border shadow-sm flex items-center gap-6 transition-all hover:bg-white hover:shadow-xl hover:-translate-y-1">
+              <div className={`p-4 rounded-2xl ${stat.bg} ${stat.color}`}>
+                <stat.icon className="w-7 h-7" />
               </div>
               <div>
-                <p className="text-sm font-bold text-slate-500 uppercase tracking-wider">{stat.label}</p>
-                <p className="text-2xl font-black text-slate-900">{stat.value}</p>
+                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">{stat.label}</p>
+                <p className="text-3xl font-black text-slate-900 tracking-tighter">{stat.value}</p>
               </div>
             </div>
           ))}
@@ -171,83 +184,83 @@ export function MyItinerary() {
         <AnimatePresence>
           {showAddForm && (
             <motion.div
-              initial={{ opacity: 0, height: 0, marginBottom: 0 }}
-              animate={{ opacity: 1, height: 'auto', marginBottom: 32 }}
-              exit={{ opacity: 0, height: 0, marginBottom: 0 }}
-              className="overflow-hidden"
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="mb-16"
             >
-              <div className="glass rounded-2xl p-8 border-2 border-primary/20 shadow-2xl relative overflow-hidden">
-                <div className="absolute top-0 right-0 p-8 opacity-5">
-                  <Sparkles className="w-32 h-32 text-primary" />
+              <div className="glass rounded-[3rem] p-12 border-2 border-primary/20 shadow-2xl relative overflow-hidden bg-white">
+                <div className="absolute top-0 right-0 p-12 opacity-5 pointer-events-none">
+                  <Sparkles className="w-48 h-48 text-primary" />
                 </div>
-                <h3 className="text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2">
-                  <Plus className="w-6 h-6 text-primary" />
-                  Add New Experience
+                <h3 className="text-3xl font-black text-slate-900 mb-10 flex items-center gap-4 uppercase tracking-tighter">
+                  <Plus className="w-8 h-8 text-primary" />
+                  Define Experience
                 </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  <div className="space-y-2">
-                    <label>Itinerary Day</label>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  <div className="space-y-3">
+                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Target Day</label>
                     <input
                       type="number"
                       min="1"
                       value={newItem.day}
                       onChange={(e) => setNewItem({ ...newItem, day: parseInt(e.target.value) })}
-                      className="w-full focus:ring-primary"
+                      className="w-full bg-slate-50 border-slate-100 rounded-2xl p-4 focus:ring-2 focus:ring-primary font-bold"
                     />
                   </div>
-                  <div className="space-y-2">
-                    <label>Preferred Time</label>
+                  <div className="space-y-3">
+                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Time Slot</label>
                     <input
                       type="time"
                       value={newItem.time}
                       onChange={(e) => setNewItem({ ...newItem, time: e.target.value })}
-                      className="w-full focus:ring-primary"
+                      className="w-full bg-slate-50 border-slate-100 rounded-2xl p-4 focus:ring-2 focus:ring-primary font-bold"
                     />
                   </div>
-                  <div className="space-y-2">
-                    <label>Experience Title *</label>
+                  <div className="space-y-3">
+                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Activity Title *</label>
                     <input
                       type="text"
                       value={newItem.title}
                       onChange={(e) => setNewItem({ ...newItem, title: e.target.value })}
-                      placeholder="e.g., Akagera Safari"
-                      className="w-full focus:ring-primary"
+                      placeholder="e.g., Canopy Walk"
+                      className="w-full bg-slate-50 border-slate-100 rounded-2xl p-4 focus:ring-2 focus:ring-primary font-bold"
                     />
                   </div>
-                  <div className="space-y-2">
-                    <label>Location *</label>
+                  <div className="space-y-3">
+                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Official Location *</label>
                     <input
                       type="text"
                       value={newItem.location}
                       onChange={(e) => setNewItem({ ...newItem, location: e.target.value })}
-                      placeholder="e.g., Eastern Province"
-                      className="w-full focus:ring-primary"
+                      placeholder="e.g., Nyungwe Forest"
+                      className="w-full bg-slate-50 border-slate-100 rounded-2xl p-4 focus:ring-2 focus:ring-primary font-bold"
                     />
                   </div>
-                  <div className="space-y-2">
-                    <label>Approx. Cost</label>
+                  <div className="space-y-3">
+                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Economic Value</label>
                     <input
                       type="text"
                       value={newItem.cost}
                       onChange={(e) => setNewItem({ ...newItem, cost: e.target.value })}
-                      placeholder="e.g., $150"
-                      className="w-full focus:ring-primary"
+                      placeholder="e.g., $60"
+                      className="w-full bg-slate-50 border-slate-100 rounded-2xl p-4 focus:ring-2 focus:ring-primary font-bold"
                     />
                   </div>
-                  <div className="space-y-2">
-                    <label>Notes</label>
+                  <div className="space-y-3">
+                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Operational Notes</label>
                     <input
                       type="text"
                       value={newItem.notes}
                       onChange={(e) => setNewItem({ ...newItem, notes: e.target.value })}
-                      placeholder="Things to remember"
-                      className="w-full focus:ring-primary"
+                      placeholder="Special requirements"
+                      className="w-full bg-slate-50 border-slate-100 rounded-2xl p-4 focus:ring-2 focus:ring-primary font-bold"
                     />
                   </div>
                 </div>
-                <div className="flex gap-4 mt-8">
-                  <button onClick={addItem} className="btn-primary">Confirm Activity</button>
-                  <button onClick={() => setShowAddForm(false)} className="px-6 py-2.5 rounded-lg font-medium text-slate-500 hover:bg-slate-100 transition-colors">Discard</button>
+                <div className="flex flex-wrap gap-4 mt-12">
+                  <button onClick={addItem} className="btn-primary px-10">Confirm Synthesis</button>
+                  <button onClick={() => setShowAddForm(false)} className="px-8 py-3 rounded-2xl font-black uppercase tracking-widest text-slate-400 hover:text-slate-600 transition-colors">Discard</button>
                 </div>
               </div>
             </motion.div>
@@ -255,7 +268,7 @@ export function MyItinerary() {
         </AnimatePresence>
 
         {/* Itinerary Timeline */}
-        <div className="space-y-12">
+        <div className="space-y-20 relative before:absolute before:left-[31px] before:top-0 before:bottom-0 before:w-1 before:bg-slate-50">
           {Object.keys(groupedItems).sort((a, b) => parseInt(a) - parseInt(b)).map((day, dayIdx) => (
             <motion.div 
               key={day}
@@ -263,61 +276,61 @@ export function MyItinerary() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ delay: dayIdx * 0.1 }}
-              className="relative"
+              className="relative z-10"
             >
-              <div className="flex items-center gap-6 mb-8">
-                <div className="w-14 h-14 bg-slate-900 text-white rounded-2xl flex items-center justify-center shadow-xl z-10">
-                  <span className="text-xl font-black">0{day}</span>
+              <div className="flex items-center gap-8 mb-10">
+                <div className="w-16 h-16 bg-slate-900 text-white rounded-[1.5rem] flex items-center justify-center shadow-2xl ring-8 ring-white">
+                  <span className="text-2xl font-black">0{day}</span>
                 </div>
-                <div className="h-px flex-1 bg-gradient-to-r from-slate-200 to-transparent"></div>
-                <h2 className="text-2xl font-black text-slate-900 uppercase tracking-tighter">Day {day} Schedule</h2>
+                <h2 className="text-3xl font-black text-slate-900 uppercase tracking-tighter">Day {day} Schedule</h2>
               </div>
 
-              <div className="grid gap-6 pl-20 relative before:absolute before:left-[27px] before:top-0 before:bottom-0 before:w-0.5 before:bg-slate-100 before:z-0">
+              <div className="grid gap-8 pl-20">
                 <AnimatePresence mode="popLayout">
-                  {groupedItems[parseInt(day)].map((item) => (
+                  {groupedItems[parseInt(day)].map((item, idx) => (
                     <motion.div
                       key={item.id}
                       layout
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.9 }}
-                      className="card-lift glass rounded-2xl p-6 border-border shadow-sm group overflow-hidden relative"
+                      initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                      transition={{ delay: idx * 0.1, type: "spring", stiffness: 100 }}
+                      className="card-lift glass rounded-[2.5rem] p-10 border-border shadow-sm group overflow-hidden relative bg-white hover:bg-slate-50/50"
                     >
-                      <div className="absolute top-0 right-0 w-2 h-full bg-primary opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                      <div className="flex items-start justify-between gap-4">
+                      <div className="absolute top-0 right-0 w-3 h-full bg-primary opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                      <div className="flex items-start justify-between gap-8">
                         <div className="flex-1">
-                          <div className="flex flex-wrap items-center gap-4 mb-4">
+                          <div className="flex flex-wrap items-center gap-6 mb-6">
                             {item.time && (
-                              <span className="flex items-center gap-1.5 px-3 py-1 bg-primary/10 text-primary text-xs font-bold rounded-full uppercase tracking-wider">
-                                <Clock className="w-3 h-3" />
+                              <span className="flex items-center gap-2 px-4 py-1.5 bg-primary/10 text-primary text-[10px] font-black rounded-full uppercase tracking-widest">
+                                <Clock className="w-3.5 h-3.5" />
                                 {item.time}
                               </span>
                             )}
-                            <span className="flex items-center gap-1.5 text-slate-400 text-xs font-bold uppercase tracking-wider">
-                              <MapPin className="w-3 h-3" />
+                            <span className="flex items-center gap-2 text-slate-400 text-[10px] font-black uppercase tracking-widest">
+                              <MapPin className="w-3.5 h-3.5 text-primary" />
                               {item.location}
                             </span>
                             {item.cost && (
-                              <span className="flex items-center gap-1.5 text-primary text-xs font-bold uppercase tracking-wider">
-                                <DollarSign className="w-3 h-3" />
+                              <span className="flex items-center gap-2 text-slate-900 text-[10px] font-black uppercase tracking-widest">
+                                <DollarSign className="w-3.5 h-3.5 text-primary" />
                                 {item.cost}
                               </span>
                             )}
                           </div>
-                          <h3 className="text-xl font-black text-slate-900 mb-2 group-hover:text-primary transition-colors">{item.title}</h3>
+                          <h3 className="text-2xl font-black text-slate-900 mb-4 group-hover:text-primary transition-colors tracking-tighter uppercase leading-none">{item.title}</h3>
                           {item.notes && (
-                            <div className="flex gap-2 p-3 bg-slate-50 rounded-xl border border-slate-100 mt-4">
-                              <Sparkles className="w-4 h-4 text-primary shrink-0" />
-                              <p className="text-sm text-slate-600 font-medium italic leading-relaxed">{item.notes}</p>
+                            <div className="flex gap-4 p-5 bg-slate-50 rounded-2xl border border-slate-100 mt-8 relative">
+                              <Sparkles className="w-5 h-5 text-primary shrink-0 animate-pulse" />
+                              <p className="text-sm text-slate-600 font-medium italic leading-relaxed border-l-2 border-primary/20 pl-4">{item.notes}</p>
                             </div>
                           )}
                         </div>
                         <button
                           onClick={() => deleteItem(item.id)}
-                          className="p-3 bg-red-50 text-red-400 rounded-xl opacity-0 group-hover:opacity-100 transition-all hover:bg-red-500 hover:text-white"
+                          className="p-4 bg-red-50 text-red-500 rounded-2xl opacity-0 group-hover:opacity-100 transition-all hover:bg-red-500 hover:text-white shadow-lg"
                         >
-                          <Trash2 className="w-5 h-5" />
+                          <Trash2 className="w-6 h-6" />
                         </button>
                       </div>
                     </motion.div>
@@ -330,20 +343,20 @@ export function MyItinerary() {
 
         {items.length === 0 && (
           <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-center py-24 glass rounded-3xl border-dashed border-2 border-slate-200"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="text-center py-32 glass rounded-[3rem] border-dashed border-4 border-slate-100 bg-slate-50/50"
           >
-            <div className="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-6">
-              <Calendar className="w-10 h-10 text-slate-300" />
+            <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center mx-auto mb-8 shadow-xl">
+              <Calendar className="w-12 h-12 text-slate-200" />
             </div>
-            <h3 className="text-2xl font-bold text-slate-900 mb-2">Blank Canvas</h3>
-            <p className="text-slate-500 mb-8 max-w-xs mx-auto">Your Rwanda journey is waiting to be written. Add your first experience.</p>
+            <h3 className="text-3xl font-black text-slate-900 mb-3 uppercase tracking-tighter">Tabula Rasa</h3>
+            <p className="text-slate-500 mb-10 max-w-sm mx-auto font-medium italic">Your Rwanda journey remains unwritten. Synthesize your first experience.</p>
             <button
               onClick={() => setShowAddForm(true)}
-              className="btn-primary"
+              className="btn-primary px-12 py-5 rounded-2xl"
             >
-              Start Building
+              Initialize Expedition
             </button>
           </motion.div>
         )}
@@ -353,15 +366,20 @@ export function MyItinerary() {
           <motion.div 
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            className="mt-16 flex justify-center"
+            className="mt-24 text-center space-y-8"
           >
-            <button className="flex items-center gap-3 px-10 py-5 bg-slate-900 text-white rounded-2xl font-black uppercase tracking-tighter hover:bg-slate-800 transition-all hover:shadow-2xl active:scale-95 group">
-              <Download className="w-6 h-6 group-hover:animate-bounce" />
-              <span>Download PDF Guide</span>
+            <button className="inline-flex items-center gap-4 px-12 py-6 bg-slate-900 text-white rounded-[2rem] font-black uppercase tracking-tighter hover:bg-slate-800 transition-all hover:shadow-2xl active:scale-95 group">
+              <Download className="w-7 h-7 group-hover:animate-bounce" />
+              <span className="text-lg">Export Strategic Guide (PDF)</span>
             </button>
+            <div className="flex items-center justify-center gap-4 text-slate-400">
+               <ShieldCheck className="w-5 h-5 text-primary" />
+               <span className="text-[10px] font-black uppercase tracking-[0.3em]">Encrypted Cloud Sync Active</span>
+            </div>
           </motion.div>
         )}
       </div>
+      <Footer />
     </div>
   );
 }
